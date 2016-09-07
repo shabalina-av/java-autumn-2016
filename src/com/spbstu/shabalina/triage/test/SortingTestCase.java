@@ -18,18 +18,23 @@ abstract class SortingTestCase {
   }
 
   @Test
+  public void emptyArray() {
+    check(myAlgorithm, new int[]{});
+  }
+
+  @Test
   public void oneElement() {
     check(myAlgorithm, new int[]{1});
   }
 
   @Test
-  public void twoElementsSorted() {
-    check(myAlgorithm, new int[]{1, 2});
+  public void elementsSorted() {
+    check(myAlgorithm, new int[]{1, 2, 3, 4, 5});
   }
 
   @Test
-  public void twoElementsReversed() {
-    check(myAlgorithm, new int[]{2, 1});
+  public void elementsReversed() {
+    check(myAlgorithm, new int[]{2, 1, -1, -3, -5});
   }
 
   @Test
@@ -64,15 +69,23 @@ abstract class SortingTestCase {
   protected final void check(@NotNull SortingAlgorithm algorithm, @NotNull int[] array) {
     int[] result = algorithm.sort(array);
     assertEquals(result.length, array.length);
-    for (int val : result) {
-      assertTrue(IntStream.of(array).anyMatch(value -> val == value));
-    }
 
-    for (int val : array) {
-      assertTrue(IntStream.of(result).anyMatch(value -> val == value));
-    }
+    checkContainsAllElements(result, array);
+    checkContainsAllElements(array, result);
 
     checkSorted(algorithm.sort(array));
+  }
+
+  private void checkContainsAllElements(@NotNull int[] small, @NotNull int[] big) {
+    for (int v1 : small) {
+      boolean matched = false;
+      for (int v2 : big) {
+        if (v1 == v2) {
+          matched = true;
+        }
+      }
+      assertTrue(matched);
+    }
   }
 
   private void checkSorted(@NotNull int[] array) {
