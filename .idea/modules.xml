@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/triage.iml" filepath="$PROJECT_DIR$/triage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/triage.iml" filepath="$PROJECT_DIR$/.idea/modules/triage.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/triage_main.iml" filepath="$PROJECT_DIR$/.idea/modules/triage_main.iml" group="triage" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/triage_test.iml" filepath="$PROJECT_DIR$/.idea/modules/triage_test.iml" group="triage" />
     </modules>
   </component>
 </project>

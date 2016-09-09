@@ -7,9 +7,7 @@ import java.util.Arrays;
 
 public class JavaBuiltInSort implements SortingAlgorithm {
   @Override
-  public int[] sort(@NotNull int[] array) {
-    int[] copy = array.clone();
-    Arrays.sort(copy);
-    return copy;
+  public void sort(@NotNull int[] array) {
+    Arrays.sort(array);
   }
 }

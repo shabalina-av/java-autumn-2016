@@ -1,15 +1,13 @@
 package com.spbstu.shabalina.triage.impl.nlogn;
 
-import java.util.*;
-
 import com.spbstu.shabalina.triage.SortingAlgorithm;
 import com.sun.istack.internal.NotNull;
 
 public class MergeSort implements SortingAlgorithm {
   @Override
-  public int[] sort(@NotNull int[] inputArray) {
+  public void sort(@NotNull int[] inputArray) {
     if (inputArray.length <= 1) {
-      return inputArray.clone();
+      return;
     }
 
     int length = inputArray.length / 2;
@@ -19,37 +17,35 @@ public class MergeSort implements SortingAlgorithm {
     System.arraycopy(inputArray, 0, left, 0, length);
     System.arraycopy(inputArray, length, right, 0, inputArray.length - length);
 
-    int[] sortedLeft = sort(left);
-    int[] sortedRight = sort(right);
-    return merge(sortedLeft, sortedRight);
+    sort(left);
+    sort(right);
+    merge(left, right, inputArray);
   }
 
-  private int[] merge(int[] left, int[] right) {
+  private void merge(int[] left, int[] right, int[] inputArray) {
     int indexLeft = 0;
     int indexRight = 0;
     int indexResult = 0;
-    int[] result = new int[left.length + right.length];
 
     while (indexLeft < left.length && indexRight < right.length) {
       if (left[indexLeft] < right[indexRight]) {
-        result[indexResult] = left[indexLeft];
+        inputArray[indexResult] = left[indexLeft];
         indexLeft++;
       } else {
-        result[indexResult] = right[indexRight];
+        inputArray[indexResult] = right[indexRight];
         indexRight++;
       }
       indexResult++;
     }
 
     for (int i = indexLeft; i < left.length; i++) {
-      result[indexResult] = left[i];
+      inputArray[indexResult] = left[i];
       indexResult++;
     }
     for (int i = indexRight; i < right.length; i++) {
-      result[indexResult] = right[i];
+      inputArray[indexResult] = right[i];
       indexResult++;
     }
-    return result;
   }
 
 }

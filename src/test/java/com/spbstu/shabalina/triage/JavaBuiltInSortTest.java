@@ -1,4 +1,4 @@
-package com.spbstu.shabalina.triage.test;
+package com.spbstu.shabalina.triage;
 
 import com.spbstu.shabalina.triage.impl.nlogn.JavaBuiltInSort;
 

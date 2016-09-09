@@ -1,6 +1,5 @@
-package com.spbstu.shabalina.triage.test;
+package com.spbstu.shabalina.triage;
 
-import com.spbstu.shabalina.triage.SortingAlgorithm;
 import com.sun.istack.internal.NotNull;
 import org.junit.Test;
 
@@ -67,13 +66,14 @@ abstract class SortingTestCase {
 
   @SuppressWarnings("WeakerAccess")
   protected final void check(@NotNull SortingAlgorithm algorithm, @NotNull int[] array) {
-    int[] result = algorithm.sort(array);
+    int[] result = array.clone();
+    algorithm.sort(result);
     assertEquals(result.length, array.length);
 
     checkContainsAllElements(result, array);
     checkContainsAllElements(array, result);
 
-    checkSorted(algorithm.sort(array));
+    checkSorted(result);
   }
 
   private void checkContainsAllElements(@NotNull int[] small, @NotNull int[] big) {
