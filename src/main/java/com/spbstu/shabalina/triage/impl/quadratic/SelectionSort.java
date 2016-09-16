@@ -1,6 +1,6 @@
 package com.spbstu.shabalina.triage.impl.quadratic;
 
-import com.sun.istack.internal.NotNull;
+import org.jetbrains.annotations.NotNull;
 
 public class SelectionSort {
   public static <T extends Comparable<T>>void sort(@NotNull T[] inputArray) {

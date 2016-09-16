@@ -1,11 +1,9 @@
 package com.spbstu.shabalina.triage;
 
-import com.sun.istack.internal.NotNull;
 import org.junit.Test;
 
 import java.util.Random;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
@@ -14,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 abstract class SortingTestCase {
   private final SortingAlgorithm myAlgorithm;
 
-  SortingTestCase(@NotNull SortingAlgorithm algorithm) {
+  SortingTestCase(SortingAlgorithm algorithm) {
     myAlgorithm = algorithm;
   }
 
@@ -67,8 +65,13 @@ abstract class SortingTestCase {
     check(myAlgorithm, array);
   }
 
+  @Test
+  public void testStrings() {
+    check(myAlgorithm, new String[] {"b", "d", "a", "c"});
+  }
+
   @SuppressWarnings("WeakerAccess")
-  protected final <T extends Comparable<T>> void check(@NotNull SortingAlgorithm algorithm, @NotNull T[] array) {
+  protected final <T extends Comparable<T>> void check(SortingAlgorithm algorithm, T[] array) {
     T[] result = array.clone();
     //noinspection unchecked
     algorithm.sort(result);
@@ -80,7 +83,7 @@ abstract class SortingTestCase {
     checkSorted(result);
   }
 
-  private <T extends Comparable<T>> void checkContainsAllElements(@NotNull T[] small, @NotNull T[] big) {
+  private <T extends Comparable<T>> void checkContainsAllElements(T[] small, T[] big) {
     for (T v1 : small) {
       boolean matched = false;
       for (T v2 : big) {
@@ -92,7 +95,7 @@ abstract class SortingTestCase {
     }
   }
 
-  private <T extends Comparable<T>> void checkSorted(@NotNull T[] array) {
+  private <T extends Comparable<T>> void checkSorted(T[] array) {
     for (int i = 1; i < array.length; i++) {
       assertTrue(array[i - 1].compareTo(array[i]) <= 0);
     }

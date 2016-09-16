@@ -1,6 +1,7 @@
 package com.spbstu.shabalina.triage.impl.nlogn;
 
-import com.sun.istack.internal.NotNull;
+
+import org.jetbrains.annotations.NotNull;
 
 public class MergeSort {
   public static <T extends Comparable<T>> void sort(@NotNull T[] inputArray) {
