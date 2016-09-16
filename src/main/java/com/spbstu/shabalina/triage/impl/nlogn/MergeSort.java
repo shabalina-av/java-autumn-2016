@@ -1,18 +1,18 @@
 package com.spbstu.shabalina.triage.impl.nlogn;
 
-import com.spbstu.shabalina.triage.SortingAlgorithm;
 import com.sun.istack.internal.NotNull;
 
-public class MergeSort implements SortingAlgorithm {
-  @Override
-  public void sort(@NotNull int[] inputArray) {
+public class MergeSort {
+  public static <T extends Comparable<T>> void sort(@NotNull T[] inputArray) {
     if (inputArray.length <= 1) {
       return;
     }
 
     int length = inputArray.length / 2;
-    int[] left = new int[length];
-    int[] right = new int[inputArray.length - length];
+    //noinspection unchecked
+    T[] left = (T[]) new Comparable<?>[length];
+    //noinspection unchecked
+    T[] right = (T[]) new Comparable<?>[inputArray.length - length];
 
     System.arraycopy(inputArray, 0, left, 0, length);
     System.arraycopy(inputArray, length, right, 0, inputArray.length - length);
@@ -22,13 +22,13 @@ public class MergeSort implements SortingAlgorithm {
     merge(left, right, inputArray);
   }
 
-  private void merge(int[] left, int[] right, int[] inputArray) {
+  private static <T extends Comparable<T>> void merge(T[] left, T[] right, T[] inputArray) {
     int indexLeft = 0;
     int indexRight = 0;
     int indexResult = 0;
 
     while (indexLeft < left.length && indexRight < right.length) {
-      if (left[indexLeft] < right[indexRight]) {
+      if (left[indexLeft].compareTo(right[indexRight])<0) {
         inputArray[indexResult] = left[indexLeft];
         indexLeft++;
       } else {
