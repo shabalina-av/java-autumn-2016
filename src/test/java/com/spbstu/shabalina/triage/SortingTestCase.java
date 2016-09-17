@@ -67,37 +67,44 @@ abstract class SortingTestCase {
 
   @Test
   public void testStrings() {
-    check(myAlgorithm, new String[] {"b", "d", "a", "c"});
+    check(myAlgorithm, new String[]{"b", "d", "a", "c"});
   }
 
   @SuppressWarnings("WeakerAccess")
   protected final <T extends Comparable<T>> void check(SortingAlgorithm algorithm, T[] array) {
     T[] result = array.clone();
-    //noinspection unchecked
     algorithm.sort(result);
     assertEquals(result.length, array.length);
 
-    checkContainsAllElements(result, array);
-    checkContainsAllElements(array, result);
+    assertTrue("Found new elements", checkContainsAllElements(result, array));
+    assertTrue("Items have disappeared.", checkContainsAllElements(array, result));
 
-    checkSorted(result);
+    assertTrue("Result is unordered", checkSorted(result));
   }
 
-  private <T extends Comparable<T>> void checkContainsAllElements(T[] small, T[] big) {
-    for (T v1 : small) {
+  private <T extends Comparable<T>> boolean checkContainsAllElements(T[] small, T[] big) {
+    boolean[] found = new boolean[small.length];
+    for (T elem : small) {
       boolean matched = false;
-      for (T v2 : big) {
-        if (v1.compareTo(v2) == 0) {
+      for (int j = 0; j < big.length; j++) {
+        if ((elem.compareTo(big[j]) == 0) && (!found[j])) {
           matched = true;
+          found[j] = true;
+          break;
         }
       }
-      assertTrue(matched);
+      if (!matched) return false;
     }
+    return true;
   }
 
-  private <T extends Comparable<T>> void checkSorted(T[] array) {
+  private <T extends Comparable<T>> boolean checkSorted(T[] array) {
     for (int i = 1; i < array.length; i++) {
-      assertTrue(array[i - 1].compareTo(array[i]) <= 0);
+      if (array[i - 1].compareTo(array[i]) > 0) {
+        return false;
+      }
     }
+
+    return true;
   }
 }
