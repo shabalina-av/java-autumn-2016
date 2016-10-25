@@ -74,7 +74,6 @@ abstract class SortingTestCase {
   protected final <T extends Comparable<T>> void check(SortingAlgorithm algorithm, T[] array) {
     T[] result = array.clone();
     algorithm.sort(result);
-    assertEquals(result.length, array.length);
 
     assertTrue("Found new elements", checkContainsAllElements(result, array));
     assertTrue("Items have disappeared.", checkContainsAllElements(array, result));
