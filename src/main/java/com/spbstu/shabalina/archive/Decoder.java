@@ -3,6 +3,7 @@ package com.spbstu.shabalina.archive;
 import com.spbstu.shabalina.archive.rle.RleDecoder;
 import org.apache.commons.cli.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -34,6 +35,7 @@ public class Decoder {
       }
     } catch (Exception e) {
       new HelpFormatter().printHelp("decoder", options);
+      return;
     }
 
     try (RleDecoder decoder = new RleDecoder(filename == null ?

@@ -2,10 +2,12 @@ package com.spbstu.shabalina.archive.rle;
 
 import org.junit.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class RleEncoderTest {
   @Test
@@ -31,5 +33,22 @@ public class RleEncoderTest {
 
     assertEquals(1, bytes[6]);
     assertEquals(4, bytes[7]);
+  }
+
+  @Test(expected = IOException.class)
+  public void readFromClosedStreamTest() throws IOException {
+    RleEncoder decoder = new RleEncoder(new ByteArrayOutputStream());
+
+    boolean isThrown = false;
+    try {
+      decoder.close();
+    } catch (IOException e) {
+      isThrown = true;
+    }
+
+    assertFalse(isThrown);
+
+    //noinspection ResultOfMethodCallIgnored
+    decoder.write(10);
   }
 }

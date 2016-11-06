@@ -34,6 +34,7 @@ public class Encoder {
       }
     } catch (Exception e) {
       new HelpFormatter().printHelp("encoder", options);
+      return;
     }
 
     try (RleEncoder encoder = new RleEncoder(System.out);

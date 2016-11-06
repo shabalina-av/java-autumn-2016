@@ -11,19 +11,25 @@ public class RleEncoder extends OutputStream {
   private int cachedValue = Integer.MIN_VALUE;
   private int repeatCount = 0;
 
+  private boolean isClosed = false;
+
   public RleEncoder(OutputStream out) {
     outputStream = out;
   }
 
   @Override
   public void write(int b) throws IOException {
+    if (isClosed) {
+      throw new IOException("Stream was closed");
+    }
+
     if (b == cachedValue) {
       repeatCount++;
       if (repeatCount == MAX_REPEAT_COUNT) {
-        flush(repeatCount);
+        flush();
       }
     } else {
-      flush(repeatCount);
+      flush();
 
       cachedValue = b;
       repeatCount = 1;
@@ -32,15 +38,15 @@ public class RleEncoder extends OutputStream {
 
   @Override
   public void close() throws IOException {
-    flush(repeatCount);
-
+    flush();
+    isClosed = true;
     outputStream.close();
-    super.close();
   }
 
-  private void flush(int count) throws IOException {
-    if (count != 0) {
-      outputStream.write(count);
+  @Override
+  public void flush() throws IOException {
+    if (repeatCount != 0) {
+      outputStream.write(repeatCount);
       outputStream.write(cachedValue);
       repeatCount = 0;
     }
