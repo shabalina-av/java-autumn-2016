@@ -6,8 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-abstract class RecentlyUsedBasedPolicy<K> implements Cache.ReplacementPolicy<K> {
-  final TreeMap<Long, K> time2Item = new TreeMap<>();
+@SuppressWarnings("WeakerAccess")
+public abstract class RecentlyUsedBasedPolicy<K> implements Cache.ReplacementPolicy<K> {
+  protected final TreeMap<Long, K> time2Item = new TreeMap<>();
   private final Map<K, Long> item2time = new HashMap<>();
   private long counter = Long.MIN_VALUE;
 

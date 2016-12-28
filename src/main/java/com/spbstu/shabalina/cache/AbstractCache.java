@@ -3,26 +3,31 @@ package com.spbstu.shabalina.cache;
 import java.util.HashMap;
 import java.util.Map;
 
-class AbstractCache<K, V> implements Cache<K, V> {
+@SuppressWarnings("WeakerAccess")
+public abstract class AbstractCache<K, V> implements Cache<K, V> {
   private final Map<K, V> items = new HashMap<>();
   private final ReplacementPolicy<K> cachePolicy;
   private final int cacheSize;
 
-  AbstractCache(int size, ReplacementPolicy<K> policy) {
+  protected AbstractCache(int size, ReplacementPolicy<K> policy) {
     cacheSize = size;
     cachePolicy = policy;
   }
 
-  public void put(K key, V value) {
+  public boolean put(K key, V value) {
     if (items.containsKey(key) || items.size() < cacheSize) {
       addItem(key, value);
     } else {
       final K toReplace = cachePolicy.replace();
-      if (toReplace != null) {
-        items.remove(toReplace);
-        addItem(key, value);
+      if (toReplace == null) {
+        return false;
       }
+
+      items.remove(toReplace);
+      addItem(key, value);
     }
+
+    return true;
   }
 
   private void addItem(K key, V value) {
@@ -31,6 +36,9 @@ class AbstractCache<K, V> implements Cache<K, V> {
   }
 
   public V get(K key) {
+    if (items.containsKey(key)) {
+      cachePolicy.touchItem(key);
+    }
     return items.get(key);
   }
 }

@@ -21,9 +21,9 @@ public class MruCacheTest extends CacheTestCase {
     cache.put(2, 2.);
     cache.put(3, 3.);
 
-    assertEquals(3., cache.get(3), 0.1);
-    assertEquals(2., cache.get(2), 0.1);
     assertEquals(1., cache.get(1), 0.1);
+    assertEquals(2., cache.get(2), 0.1);
+    assertEquals(3., cache.get(3), 0.1);
 
     cache.put(4, 4.);
 
