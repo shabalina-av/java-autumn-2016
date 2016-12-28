@@ -7,15 +7,25 @@ import java.util.Map;
 public abstract class AbstractCache<K, V> implements Cache<K, V> {
   private final Map<K, V> items = new HashMap<>();
   private final ReplacementPolicy<K> cachePolicy;
-  private final int cacheSize;
+  private final int cacheCapacity;
+
+  @Override
+  public int size() {
+    return items.size();
+  }
+
+  @Override
+  public int capacity() {
+    return cacheCapacity;
+  }
 
   protected AbstractCache(int size, ReplacementPolicy<K> policy) {
-    cacheSize = size;
+    cacheCapacity = size;
     cachePolicy = policy;
   }
 
   public boolean put(K key, V value) {
-    if (items.containsKey(key) || items.size() < cacheSize) {
+    if (items.containsKey(key) || items.size() < cacheCapacity) {
       addItem(key, value);
     } else {
       final K toReplace = cachePolicy.replace();

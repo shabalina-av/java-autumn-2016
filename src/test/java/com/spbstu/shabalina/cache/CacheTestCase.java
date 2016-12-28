@@ -9,8 +9,11 @@ public abstract class CacheTestCase {
   @Test
   public void zeroSize() {
     final Cache<Integer, Double> cache = createCache(0);
+    assertEquals(0, cache.capacity());
+    assertEquals(0, cache.size());
     cache.put(10, 1.);
 
+    assertEquals(0, cache.size());
     assertNull(cache.get(10));
   }
 
@@ -18,6 +21,8 @@ public abstract class CacheTestCase {
   public void oneSize() {
     final Cache<Integer, Double> cache = createCache(1);
     cache.put(10, 1.);
+
+    assertEquals(1, cache.size());
 
     assertEquals(1., cache.get(10), 0.01);
     cache.put(11, 2.);
@@ -30,6 +35,8 @@ public abstract class CacheTestCase {
     final Cache<Integer, Double> cache = createCache(1);
     cache.put(10, 1.);
     cache.put(10, 2.);
+
+    assertEquals(1, cache.size());
 
     assertEquals(2., cache.get(10), 0.01);
   }

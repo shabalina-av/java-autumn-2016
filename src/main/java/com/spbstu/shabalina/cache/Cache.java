@@ -5,6 +5,10 @@ public interface Cache<K, V> {
 
   V get(K key);
 
+  int size();
+
+  int capacity();
+
   interface ReplacementPolicy<K> {
     // nothing to replace -> null
     K replace();
